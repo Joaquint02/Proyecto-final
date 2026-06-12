@@ -1,2 +1,14 @@
+# Node
 node_modules/
+
+# Variables privadas
 .env
+
+# Vite
+dist/
+
+# Logs
+npm-debug.log*
+
+# Editor
+.vscode/
