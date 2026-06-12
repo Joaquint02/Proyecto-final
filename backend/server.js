@@ -12,27 +12,24 @@ require("dotenv").config();
 const app = express();
 
 app.use(cors());
-app.use(express.json());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+// RUTAS
 app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("API funcionando");
 });
 
-app.get("/prueba", (req, res) => {
-  res.send("PRUEBA SERVER");
-});
-
-app.get("/api/auth/test-direct", (req, res) => {
-  res.send("TEST AUTH DIRECTO");
-});
-
 sequelize
-  .sync()
+  .sync({ alter: true })
   .then(() => {
-    console.log("Base de datos sincronizada");
+    console.log("Base de datos sincronizada con cambios");
   })
   .catch((error) => {
     console.error(error);
@@ -40,6 +37,6 @@ sequelize
 
 const PORT = 3000;
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+app.listen(PORT,()=>{
+ console.log(`Servidor corriendo en puerto ${PORT}`);
 });

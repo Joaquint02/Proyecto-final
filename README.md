@@ -236,4 +236,4 @@ El desarrollo fue organizado utilizando:
 
 Joaquín Trías
 
-Proyecto Final Full Stack
+Proyecto Final 

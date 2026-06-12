@@ -1,129 +1,268 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-
+import { useState, useEffect } from "react";
 import api from "./services/api";
 
-import Login from "./components/Login";
-import ProductForm from "./components/ProductForm";
 import ProductList from "./components/ProductList";
-import ProductDetail from "./components/ProductDetail";
-import DashboardStats from "./components/DashboardStats";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import ProductForm from "./components/ProductForm";
+import Login from "./components/Login";
+
 
 function App() {
-  const [selectedProduct, setSelectedProduct] =
-    useState(null);
 
-  const [selectedView, setSelectedView] =
-    useState(null);
+
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+
 
   const [products, setProducts] = useState([]);
 
-  const [isAuthenticated, setIsAuthenticated] =
-    useState(
-      !!localStorage.getItem("token")
-    );
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const fetchProducts = async () => {
+
+  const [selectedView, setSelectedView] = useState(null);
+
+
+
+
+
+  const getProducts = async () => {
+
     try {
+
+
       const res = await api.get("/");
+
+
       setProducts(res.data);
-    } catch (error) {
-      console.error(error);
+
+
+
+    } catch(error) {
+
+
+      console.error(
+        "Error cargando productos",
+        error
+      );
+
+
     }
+
   };
 
-  const username =
-  localStorage.getItem("username");
 
-  if (!isAuthenticated) {
+
+
+
+
+  useEffect(()=>{
+
+
+    if(isAuthenticated){
+
+      getProducts();
+
+    }
+
+
+  },[isAuthenticated]);
+
+
+
+
+
+
+
+
+  if(!isAuthenticated){
+
+
     return (
+
       <Login
-        setIsAuthenticated={
-          setIsAuthenticated
-        }
+
+      setIsAuthenticated={setIsAuthenticated}
+
       />
+
     );
+
+
   }
 
-  return (
-    <div className="dashboard-layout">
-      <aside className="sidebar">
-        <h2>📦 Inventario</h2>
 
-        <ul>
-          <li>Dashboard</li>
-          <li>Productos</li>
-        </ul>
-        <ToastContainer
-  position="top-right"
-  autoClose={3000}
-/>
+
+
+
+
+
+
+  return (
+
+    <div>
+
+
+      <header>
+
+
+        <h1>
+          Dashboard Productos
+        </h1>
+
 
         <button
-          className="logout-btn"
-          onClick={() => {
-            localStorage.removeItem("token");
-            setIsAuthenticated(false);
-          }}
+
+        onClick={()=>{
+
+          localStorage.removeItem("token");
+
+          setIsAuthenticated(false);
+
+        }}
+
         >
-          Cerrar Sesión
+
+        Cerrar sesión
+
         </button>
-      </aside>
 
-      <main className="main-content">
-        <header className="topbar">
-  <div>
-    <h1>
-      Sistema de Gestión de Productos
-    </h1>
 
-    <p>
-      Bienvenido, <strong>{username}</strong>
-    </p>
-  </div>
-</header>
+      </header>
 
-        <DashboardStats products={products} />
 
-        {selectedView && (
-          <ProductDetail
-            product={selectedView}
-            setSelectedView={
-              setSelectedView
-            }
+
+
+
+
+
+      <ProductForm
+
+
+      selectedProduct={selectedProduct}
+
+
+      setSelectedProduct={setSelectedProduct}
+
+
+      setProducts={setProducts}
+
+
+      />
+
+
+
+
+
+
+
+
+      <ProductList
+
+
+      products={products}
+
+
+      setProducts={setProducts}
+
+
+      setSelectedProduct={setSelectedProduct}
+
+
+      setSelectedView={setSelectedView}
+
+
+      />
+
+
+
+
+
+
+
+
+
+      {
+      
+      selectedView && (
+
+
+        <div className="card">
+
+
+          <h2>
+            Detalle del producto
+          </h2>
+
+
+
+          <img
+
+          src={selectedView.imagen}
+
+          alt={selectedView.nombre}
+
+          className="product-img-big"
+
           />
-        )}
 
-        <div className="content">
-          <ProductForm
-            selectedProduct={
-              selectedProduct
-            }
-            setSelectedProduct={
-              setSelectedProduct
-            }
-          />
 
-          <ProductList
-            products={products}
-            setProducts={setProducts}
-            setSelectedProduct={
-              setSelectedProduct
-            }
-            setSelectedView={
-              setSelectedView
-            }
-          />
+
+          <h3>
+            {selectedView.nombre}
+          </h3>
+
+
+
+          <p>
+            {selectedView.descripcion}
+          </p>
+
+
+
+          <p>
+            Precio: ${selectedView.precio}
+          </p>
+
+
+
+          <p>
+            Stock: {selectedView.stock}
+          </p>
+
+
+
+
+          <button
+
+          onClick={()=>
+            setSelectedView(null)
+          }
+
+          >
+
+          Cerrar
+
+          </button>
+
+
+
         </div>
-      </main>
+
+
+      )
+
+      }
+
+
+
+
     </div>
+
   );
+
+
 }
+
 
 export default App;

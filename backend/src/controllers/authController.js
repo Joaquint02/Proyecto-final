@@ -39,6 +39,7 @@ const register = async (req, res) => {
   
 
 const login = async (req, res) => {
+  
   console.log("LOGIN EJECUTADO");
   console.log(req.body);
 
@@ -88,7 +89,63 @@ const login = async (req, res) => {
   }
 };
 
+const getUsers = async (req, res) => {
+  try {
+
+    const users = await User.findAll({
+      attributes: [
+        "id",
+        "username",
+        "createdAt"
+      ]
+    });
+
+    res.json(users);
+
+  } catch(error){
+
+    res.status(500).json({
+      error:error.message
+    });
+
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    const user = await User.findByPk(id);
+
+
+    if (!user) {
+      return res.status(404).json({
+        mensaje: "Usuario no encontrado"
+      });
+    }
+
+
+    await user.destroy();
+
+
+    res.json({
+      mensaje: "Usuario eliminado correctamente"
+    });
+
+
+  } catch(error){
+
+    res.status(500).json({
+      error:error.message
+    });
+
+  }
+};
+
 module.exports = {
   register,
   login,
+  getUsers,
+  deleteUser
 };
