@@ -1,268 +1,123 @@
-import { useState, useEffect } from "react";
-import api from "./services/api";
+import { useState } from "react";
+import "./App.css";
 
-import ProductList from "./components/ProductList";
-import ProductForm from "./components/ProductForm";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Navbar from "./components/Navbar";
+
+import Home from "./paginas/home";
+import Tienda from "./paginas/tienda";
+import ProductoDetalle from "./paginas/productodetalle";
+import Carrito from "./paginas/carrito";
+import Perfil from "./paginas/perfil";
+import Administracion from "./paginas/administracion";
+import Checkout from "./paginas/checkout";
+import CompraExitosa from "./paginas/CompraExitosa";
 import Login from "./components/Login";
-
+import MisCompras from "./paginas/MisCompras";
 
 function App() {
 
-
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("token")
+    localStorage.getItem("token") ? true : false
   );
-
-
-  const [products, setProducts] = useState([]);
-
-
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-
-  const [selectedView, setSelectedView] = useState(null);
-
-
-
-
-
-  const getProducts = async () => {
-
-    try {
-
-
-      const res = await api.get("/");
-
-
-      setProducts(res.data);
-
-
-
-    } catch(error) {
-
-
-      console.error(
-        "Error cargando productos",
-        error
-      );
-
-
-    }
-
-  };
-
-
-
-
-
-
-  useEffect(()=>{
-
-
-    if(isAuthenticated){
-
-      getProducts();
-
-    }
-
-
-  },[isAuthenticated]);
-
-
-
-
-
-
-
-
-  if(!isAuthenticated){
-
-
-    return (
-
-      <Login
-
-      setIsAuthenticated={setIsAuthenticated}
-
-      />
-
-    );
-
-
-  }
-
-
-
-
-
-
-
 
   return (
 
-    <div>
-
-
-      <header>
-
-
-        <h1>
-          Dashboard Productos
-        </h1>
-
-
-        <button
-
-        onClick={()=>{
-
-          localStorage.removeItem("token");
-
-          setIsAuthenticated(false);
-
-        }}
-
-        >
-
-        Cerrar sesión
-
-        </button>
-
-
-      </header>
-
-
-
-
-
-
-
-      <ProductForm
-
-
-      selectedProduct={selectedProduct}
-
-
-      setSelectedProduct={setSelectedProduct}
-
-
-      setProducts={setProducts}
-
-
-      />
-
-
-
-
-
-
-
-
-      <ProductList
-
-
-      products={products}
-
-
-      setProducts={setProducts}
-
-
-      setSelectedProduct={setSelectedProduct}
-
-
-      setSelectedView={setSelectedView}
-
-
-      />
-
-
-
-
-
-
-
-
-
-      {
-      
-      selectedView && (
-
-
-        <div className="card">
-
-
-          <h2>
-            Detalle del producto
-          </h2>
-
-
-
-          <img
-
-          src={selectedView.imagen}
-
-          alt={selectedView.nombre}
-
-          className="product-img-big"
-
-          />
-
-
-
-          <h3>
-            {selectedView.nombre}
-          </h3>
-
-
-
-          <p>
-            {selectedView.descripcion}
-          </p>
-
-
-
-          <p>
-            Precio: ${selectedView.precio}
-          </p>
-
-
-
-          <p>
-            Stock: {selectedView.stock}
-          </p>
-
-
-
-
-          <button
-
-          onClick={()=>
-            setSelectedView(null)
+    <BrowserRouter>
+
+      <Navbar />
+
+      <Routes>
+
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/tienda"
+          element={<Tienda />}
+        />
+
+        <Route
+          path="/producto/:id"
+          element={<ProductoDetalle />}
+        />
+
+        <Route
+          path="/carrito"
+          element={<Carrito />}
+        />
+
+        <Route
+          path="/checkout"
+          element={<Checkout />}
+        />
+
+        <Route
+          path="/compra-exitosa"
+          element={<CompraExitosa />}
+        />
+
+        <Route
+         path="/mis-compras"
+        element={<MisCompras />}
+         />
+
+        <Route
+          path="/perfil"
+          element={<Perfil />}
+        />
+
+        <Route
+          path="/login"
+          element={
+            <Login
+              setIsAuthenticated={setIsAuthenticated}
+            />
           }
-
-          >
-
-          Cerrar
-
-          </button>
+        />
 
 
+        <Route
+          path="/admin"
+          element={
+            localStorage.getItem("rol") === "admin"
+              ? (
+                <Administracion
+                  logout={() => {
 
-        </div>
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("rol");
+                    localStorage.removeItem("usuario");
+                    localStorage.removeItem("userId");
+                    setIsAuthenticated(false);
 
+                    window.location.href = "/";
+                  }}
+                />
+              )
+              : (
+                <Home />
+              )
+          }
+        />
 
-      )
+      </Routes>
 
-      }
+      <ToastContainer />
 
-
-
-
-    </div>
+    </BrowserRouter>
 
   );
-
-
 }
-
 
 export default App;

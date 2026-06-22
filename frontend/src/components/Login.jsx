@@ -1,240 +1,143 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Register from "./Register";
-
+import Register from "./register";
+import { useAuth } from "../context/AuthContext";
 
 function Login({ setIsAuthenticated }) {
 
+  const { login } = useAuth();
 
   const [username, setUsername] = useState("");
-
   const [password, setPassword] = useState("");
-
   const [showRegister, setShowRegister] = useState(false);
-
-
-
-
 
   const handleLogin = async (e) => {
 
     e.preventDefault();
 
-
-
     try {
 
-
       const res = await axios.post(
-
         "http://localhost:3000/api/auth/login",
-
         {
           username,
-          password,
+          password
         }
-
       );
-
-
-
-
 
       localStorage.setItem(
         "token",
         res.data.token
       );
 
-
+      localStorage.setItem(
+        "rol",
+        res.data.rol
+      );
 
       localStorage.setItem(
-        "username",
-        res.data.username
+        "userId",
+        res.data.id
       );
 
+      login({
 
+        username: res.data.username,
 
+        rol: res.data.rol
 
+      });
 
       toast.success(
-        `Bienvenido ${res.data.username}`
+        "Bienvenido a TechNova"
       );
-
-
 
       setIsAuthenticated(true);
 
+      if (res.data.rol === "admin") {
 
+        window.location.href = "/admin";
 
+      } else {
 
-    } catch(error){
+        window.location.href = "/";
 
+      }
 
-      console.error(
-        error
-      );
+    } catch (error) {
 
-
+      console.error(error);
 
       toast.error(
         "Usuario o contraseña incorrectos"
       );
 
-
     }
-
 
   };
 
-
-
-
-
-
-
-
-  if(showRegister){
-
+  if (showRegister) {
 
     return (
-
       <Register
-
-      setShowRegister={
-        setShowRegister
-      }
-
+        setShowRegister={setShowRegister}
       />
-
-
     );
-
 
   }
 
-
-
-
-
-
-
   return (
 
+    <div className="card">
 
-    <div className="login-container">
+      <h2>
+        Iniciar Sesión
+      </h2>
 
+      <form onSubmit={handleLogin}>
 
-      <div className="card login-card">
-
-
-
-        <h2>
-          Iniciar Sesión
-        </h2>
-
-
-
-
-        <p>
-          Acceso al sistema administrativo
-        </p>
-
-
-
-
-
-        <form onSubmit={handleLogin}>
-
-
-          <input
-
+        <input
           type="text"
-
+          name="username"
           placeholder="Usuario"
-
           value={username}
-
-          onChange={(e)=>
+          onChange={(e) =>
             setUsername(e.target.value)
           }
-
           required
+        />
 
-          />
-
-
-
-
-
-
-          <input
-
+        <input
           type="password"
-
+          name="password"
           placeholder="Contraseña"
-
           value={password}
-
-          onChange={(e)=>
+          onChange={(e) =>
             setPassword(e.target.value)
           }
-
           required
+        />
 
-          />
+        <button type="submit">
+          Ingresar
+        </button>
 
-
-
-
-
-
-
-          <button type="submit">
-
-            Ingresar
-
-          </button>
-
-
-
-
-
-
-
-          <button
-
+        <button
           type="button"
-
-          onClick={()=>
+          onClick={() =>
             setShowRegister(true)
           }
+        >
+          Crear Usuario
+        </button>
 
-          >
-
-            Crear Usuario
-
-          </button>
-
-
-
-
-
-        </form>
-
-
-
-      </div>
-
+      </form>
 
     </div>
 
-
   );
 
-
 }
-
-
 
 export default Login;

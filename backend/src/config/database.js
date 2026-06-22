@@ -12,13 +12,4 @@ const sequelize = new Sequelize(
   }
 );
 
-sequelize
-.sync({ alter: true })
-.then(() => {
- console.log("Base de datos sincronizada con cambios");
-})
-.catch(error=>{
- console.error(error);
-});
-
 module.exports = sequelize;

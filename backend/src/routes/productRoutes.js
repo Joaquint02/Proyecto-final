@@ -1,24 +1,64 @@
 const express = require("express");
+
 const router = express.Router();
 
-const verifyToken = require("../middleware/authMiddleware");
 
 const {
-  getProducts,
-  createProduct,
-  getProductById,
-  updateProduct,
-  deleteProduct,
+
+getProducts,
+
+createProduct,
+
+getProductById,
+
+updateProduct,
+
+deleteProduct
+
 } = require("../controllers/productController");
 
-router.get("/", verifyToken, getProducts);
 
-router.get("/:id", verifyToken, getProductById);
 
-router.post("/", verifyToken, createProduct);
 
-router.put("/:id", verifyToken, updateProduct);
+// PUBLICO
+// Ver productos sin login
 
-router.delete("/:id", verifyToken, deleteProduct);
+router.get(
+"/",
+getProducts
+);
+
+
+
+// Ver detalle producto
+
+router.get(
+"/:id",
+getProductById
+);
+
+
+
+
+// ADMIN
+
+router.post(
+"/",
+createProduct
+);
+
+
+router.put(
+"/:id",
+updateProduct
+);
+
+
+router.delete(
+"/:id",
+deleteProduct
+);
+
+
 
 module.exports = router;

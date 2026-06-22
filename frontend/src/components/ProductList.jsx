@@ -1,308 +1,137 @@
 import { useState } from "react";
 import api from "../services/api";
 
-
 function ProductList({
   products,
   setProducts,
   setSelectedProduct,
-  setSelectedView,
 }) {
 
-
   const [search, setSearch] = useState("");
-
-
 
   const deleteProduct = async (id) => {
 
     const confirmar = window.confirm(
-      "¿Seguro que deseas eliminar este producto?"
+      "¿Eliminar producto?"
     );
 
-
     if (!confirmar) return;
-
 
     try {
 
       await api.delete(`/${id}`);
 
+      const res = await api.get("/");
 
-      setProducts(
-        products.filter(
-          (p)=>p.id !== id
-        )
-      );
-
+      setProducts(res.data);
 
       alert("Producto eliminado");
 
-
-    } catch(error){
+    } catch (error) {
 
       console.error(error);
 
       alert("Error al eliminar");
-
     }
-
   };
 
-
-
-
-
-  const filteredProducts = products.filter((product)=>
-
-    product.nombre
-    .toLowerCase()
-    .includes(
-      search.toLowerCase()
-    )
-
+  const filteredProducts = products.filter(
+    (product) =>
+      product.nombre
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        )
   );
 
-
-
-
-
   return (
-
-
     <div className="card">
-
 
       <h2>
         Lista de Productos
       </h2>
 
-
-
       <input
-
         type="text"
-
-        placeholder="🔍 Buscar producto..."
-
+        placeholder="Buscar producto..."
         value={search}
-
-        onChange={(e)=>
+        onChange={(e) =>
           setSearch(e.target.value)
         }
-
-        className="search-input"
-
       />
-
-
-
-
-
-      {
-
-      filteredProducts.length === 0 ? (
-
-
-        <p>
-          No se encontraron productos.
-        </p>
-
-
-      ) : (
-
-
 
       <table>
 
+        <thead>
 
-      <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
 
+        </thead>
 
-      <tr>
+        <tbody>
 
-      <th>
-      Imagen
-      </th>
+          {filteredProducts.map((p) => (
 
+            <tr key={p.id}>
 
-      <th>
-      Nombre
-      </th>
+              <td>
 
+                <img
+                  src={
+                    p.imagen ||
+                    "https://via.placeholder.com/80"
+                  }
+                  alt={p.nombre}
+                  width="80"
+                />
 
-      <th>
-      Descripción
-      </th>
+              </td>
 
+              <td>{p.nombre}</td>
 
-      <th>
-      Precio
-      </th>
+              <td>{p.descripcion}</td>
 
+              <td>${p.precio}</td>
 
-      <th>
-      Stock
-      </th>
+              <td>{p.stock}</td>
 
+              <td>
 
-      <th>
-      Acciones
-      </th>
+                <button
+                  onClick={() =>
+                    setSelectedProduct(p)
+                  }
+                >
+                  Editar
+                </button>
 
+                <button
+                  onClick={() =>
+                    deleteProduct(p.id)
+                  }
+                >
+                  Eliminar
+                </button>
 
-      </tr>
+              </td>
 
+            </tr>
 
-      </thead>
+          ))}
 
-
-
-
-
-      <tbody>
-
-
-      {
-
-      filteredProducts.map((p)=>(
-
-
-      <tr key={p.id}>
-
-
-      <td>
-
-
-      <img
-
-      src={
-        p.imagen
-        ? p.imagen
-        : "https://via.placeholder.com/80"
-      }
-
-      alt={p.nombre}
-
-      className="product-img"
-
-      />
-
-
-      </td>
-
-
-
-      <td>
-      {p.nombre}
-      </td>
-
-
-
-      <td>
-      {p.descripcion}
-      </td>
-
-
-
-      <td>
-      ${p.precio}
-      </td>
-
-
-
-      <td>
-      {p.stock}
-      </td>
-
-
-
-
-
-      <td>
-
-
-      <button
-
-      onClick={()=>
-        setSelectedView(p)
-      }
-
-      >
-
-      Ver
-
-      </button>
-
-
-
-
-
-      <button
-
-      onClick={()=>
-        setSelectedProduct(p)
-      }
-
-      >
-
-      Editar
-
-      </button>
-
-
-
-
-
-      <button
-
-      onClick={()=>
-        deleteProduct(p.id)
-      }
-
-      >
-
-      Eliminar
-
-      </button>
-
-
-
-      </td>
-
-
-
-      </tr>
-
-
-
-      ))
-
-
-      }
-
-
-
-      </tbody>
-
-
+        </tbody>
 
       </table>
 
-
-      )
-
-
-      }
-
-
     </div>
-
-
   );
-
-
 }
-
 
 export default ProductList;
