@@ -4,7 +4,7 @@ import ProductList from "../components/ProductList";
 import ProductForm from "../components/ProductForm";
 import DashboardStats from "../components/DashboardStats";
 import UserManagement from "../components/UserManagement";
-import OrdersManagement from "../components/OrdersManagement";  
+import OrdersManagement from "../components/OrdersManagement";
 
 import api from "../services/api";
 
@@ -56,27 +56,41 @@ function Administracion({ logout }) {
 
       </header>
 
-      <section className="dashboard-content">
+      <div className="dashboard-content">
 
         <DashboardStats />
 
-        <UserManagement />
+        <section className="admin-grid">
 
-        <OrdersManagement />
+          <div className="admin-card">
+            <UserManagement />
+          </div>
 
-        <ProductForm
-          selectedProduct={selectedProduct}
-          setSelectedProduct={setSelectedProduct}
-          setProducts={setProducts}
-        />
+          <div className="admin-card">
+            <OrdersManagement />
+          </div>
 
-        <ProductList
-          products={products}
-          setProducts={setProducts}
-          setSelectedProduct={setSelectedProduct}
-        />
+          <div className="admin-card">
+            <ProductForm
+              selectedProduct={selectedProduct}
+              setSelectedProduct={setSelectedProduct}
+              setProducts={setProducts}
+            />
+          </div>
 
-      </section>
+        </section>
+
+        <div className="product-table">
+
+          <ProductList
+            products={products}
+            setProducts={setProducts}
+            setSelectedProduct={setSelectedProduct}
+          />
+
+        </div>
+
+      </div>
 
     </div>
 

@@ -88,7 +88,7 @@ function App() {
 
 
         <Route
-          path="/admin"
+            path="/administracion"
           element={
             localStorage.getItem("rol") === "admin"
               ? (

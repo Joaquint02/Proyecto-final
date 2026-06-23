@@ -18,8 +18,6 @@ require("dotenv").config();
 
 const app = express();
 
-/* RELACIONES */
-
 User.hasMany(Order);
 Order.belongsTo(User);
 
@@ -36,7 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 
 /* RUTAS */
 
-app.use("/api/products", productRoutes);
+
+app.use("/api/productos", productRoutes);
 
 app.use("/api/auth", authRoutes);
 
@@ -44,11 +43,11 @@ app.use("/api/orders", orderRoutes);
 
 app.use("/api/stats", statsRoutes);
 
+
 app.get("/", (req, res) => {
   res.send("API funcionando");
 });
 
-/* BASE DE DATOS */
 
 sequelize
   .sync()

@@ -43,11 +43,13 @@ function Login({ setIsAuthenticated }) {
 
       login({
 
-        username: res.data.username,
+  id: res.data.id,
 
-        rol: res.data.rol
+  username: res.data.username,
 
-      });
+  rol: res.data.rol
+
+});
 
       toast.success(
         "Bienvenido a TechNova"
@@ -57,13 +59,13 @@ function Login({ setIsAuthenticated }) {
 
       if (res.data.rol === "admin") {
 
-        window.location.href = "/admin";
+  window.location.href = "/administracion";
 
-      } else {
+} else {
 
-        window.location.href = "/";
+  window.location.href = "/";
 
-      }
+}
 
     } catch (error) {
 

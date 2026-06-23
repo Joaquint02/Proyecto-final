@@ -2,138 +2,83 @@ import { Link } from "react-router-dom";
 import { useCarrito } from "../context/CarritoContext";
 import { useAuth } from "../context/AuthContext";
 
+function Navbar() {
 
-function Navbar(){
+  const { carrito } = useCarrito();
 
+  const { usuario, logout } = useAuth();
 
-const {carrito}=useCarrito();
+  const cantidad = carrito.reduce(
+    (acc, item) => acc + item.cantidad,
+    0
+  );
 
+  return (
 
-const {usuario,logout}=useAuth();
+    <header className="navbar">
 
+      <div className="navbar-logo">
 
+        <Link to="/">
+          ⚡ TechNova
+        </Link>
 
-const cantidad = carrito.reduce(
+      </div>
 
-(acc,item)=>acc+item.cantidad,
+      <nav className="navbar-links">
 
-0
+        <Link to="/">
+          Inicio
+        </Link>
 
-);
+        <Link to="/tienda">
+          Productos
+        </Link>
 
+        <Link to="/carrito">
+          🛒 Carrito ({cantidad})
+        </Link>
 
+        {usuario?.rol === "admin" && (
 
+          <Link to="/administracion">
+            Administración
+          </Link>
 
-return(
+        )}
 
-<header className="navbar">
+        {usuario ? (
 
+          <>
 
-<div className="navbar-logo">
+            <Link to="/perfil">
+              👤 {usuario.username}
+            </Link>
 
+            <Link to="/mis-compras">
+              Mis Compras
+            </Link>
 
-<Link to="/">
+            <button onClick={logout}>
+              Salir
+            </button>
 
-⚡ TechNova
+          </>
 
-</Link>
+        ) : (
 
+          <Link to="/login">
+            Ingresar
+          </Link>
 
-</div>
+        )}
 
+      </nav>
 
+    </header>
 
-
-<nav className="navbar-links">
-
-
-<Link to="/">
-
-Inicio
-
-</Link>
-
-
-
-<Link to="/tienda">
-
-Productos
-
-</Link>
-
-
-
-<Link to="/carrito">
-
-🛒 Carrito ({cantidad})
-
-</Link>
-
-
-
-
-
-{
-
-usuario ?
-
-
-<>
-
-
-<Link to="/perfil">
-
-👤 {usuario.username}
-
-</Link>
-
-<Link to="/mis-compras">
-  Mis Compras
-</Link>
-
-
-
-<button
-
-onClick={logout}
-
->
-
-Salir
-
-</button>
-
-
-</>
-
-
-:
-
-
-<Link to="/login">
-
-Ingresar
-
-</Link>
-
+  );
 
 }
-
-
-
-
-
-</nav>
-
-
-</header>
-
-
-)
-
-
-}
-
-
 
 export default Navbar;
