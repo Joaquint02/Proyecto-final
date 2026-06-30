@@ -1,0 +1,85 @@
+.newsletter{
+
+max-width:1000px;
+
+margin:80px auto;
+
+padding:70px 40px;
+
+background:#0f172a;
+
+border-radius:30px;
+
+text-align:center;
+
+color:white;
+
+}
+
+.newsletter h2{
+
+font-size:42px;
+
+margin-bottom:20px;
+
+}
+
+.newsletter p{
+
+margin-bottom:35px;
+
+font-size:18px;
+
+}
+
+.newsletter-form{
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+}
+
+.newsletter input{
+
+width:350px;
+
+padding:16px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+}
+
+.newsletter button{
+
+padding:16px 28px;
+
+background:#2563eb;
+
+color:white;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.newsletter button:hover{
+
+background:#1d4ed8;
+
+}

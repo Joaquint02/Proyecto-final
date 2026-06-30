@@ -2,7 +2,12 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import ProductCard from "../components/ProductCard";
-
+import Hero from "../components/Hero";
+import Features from "../components/Features";
+import Categories from "../components/Categories";
+import BannerSale from "../components/BannerSale";
+import Brands from "../components/Brands";
+import Newsletter from "../components/Newsletter";
 
 function Home(){
 
@@ -56,138 +61,18 @@ return(
 
 
 
-<section className="hero">
+<Hero />
 
 
-<h1>
+<Features />
 
-TechNova Store ⚡
+<Categories/>
 
-</h1>
+<BannerSale />
 
+<Brands />
 
-
-<h2>
-
-Tecnología que impulsa tu futuro
-
-</h2>
-
-
-
-<p>
-
-Somos una empresa especializada en notebooks,
-accesorios y equipos tecnológicos para estudiantes,
-profesionales y empresas.
-
-</p>
-
-
-
-
-<Link to="/tienda">
-
-
-<button>
-
-Ver productos
-
-</button>
-
-
-</Link>
-
-
-
-</section>
-
-
-
-
-
-
-
-<section className="marca">
-
-
-<h2>
-
-¿Por qué elegir TechNova?
-
-</h2>
-
-
-
-<div className="beneficios">
-
-
-<div>
-
-<h3>
-
-🚀 Tecnología
-
-</h3>
-
-<p>
-
-Productos modernos y de calidad.
-
-</p>
-
-</div>
-
-
-
-
-
-<div>
-
-<h3>
-
-🔒 Confianza
-
-</h3>
-
-<p>
-
-Compra segura y atención personalizada.
-
-</p>
-
-</div>
-
-
-
-
-
-<div>
-
-<h3>
-
-⚡ Innovación
-
-</h3>
-
-<p>
-
-Soluciones adaptadas a tus necesidades.
-
-</p>
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
+<Newsletter />
 
 
 

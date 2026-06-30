@@ -1,5 +1,6 @@
 const Order = require("../models/order");
 const OrderItem = require("../models/orderitem");
+const User = require("../models/user");
 
 const createOrder = async (req, res) => {
 
@@ -10,20 +11,19 @@ const createOrder = async (req, res) => {
     if (!carrito || carrito.length === 0) {
 
       return res.status(400).json({
-        mensaje: "El carrito está vacío"
+        mensaje: "El carrito está vacío",
       });
 
     }
 
     const total = carrito.reduce(
-      (acc, item) =>
-        acc + item.precio * item.cantidad,
+      (acc, item) => acc + item.precio * item.cantidad,
       0
     );
 
     const order = await Order.create({
       total,
-      UserId: userId
+      UserId: userId,
     });
 
     for (const item of carrito) {
@@ -31,20 +31,19 @@ const createOrder = async (req, res) => {
       await OrderItem.create({
 
         nombre: item.nombre,
-
         precio: item.precio,
-
         cantidad: item.cantidad,
-
-        OrderId: order.id
+        OrderId: order.id,
 
       });
 
     }
 
     res.status(201).json({
+
       mensaje: "Compra registrada",
-      order
+      order,
+
     });
 
   } catch (error) {
@@ -52,7 +51,9 @@ const createOrder = async (req, res) => {
     console.error(error);
 
     res.status(500).json({
-      error: error.message
+
+      error: error.message,
+
     });
 
   }
@@ -68,12 +69,14 @@ const getOrdersByUser = async (req, res) => {
     const orders = await Order.findAll({
 
       where: {
-        UserId: userId
+
+        UserId: userId,
+
       },
 
       include: [OrderItem],
 
-      order: [["createdAt", "DESC"]]
+      order: [["createdAt", "DESC"]],
 
     });
 
@@ -84,7 +87,9 @@ const getOrdersByUser = async (req, res) => {
     console.error(error);
 
     res.status(500).json({
-      error: error.message
+
+      error: error.message,
+
     });
 
   }
@@ -100,22 +105,25 @@ const getAllOrders = async (req, res) => {
       include: [
 
         {
-          model: OrderItem
+
+          model: OrderItem,
+
         },
 
         {
-          model: require("../models/user"),
+
+          model: User,
+
           attributes: [
             "id",
-            "username"
-          ]
-        }
+            "username",
+          ],
+
+        },
 
       ],
 
-      order: [
-        ["createdAt", "DESC"]
-      ]
+      order: [["createdAt", "DESC"]],
 
     });
 
@@ -123,8 +131,54 @@ const getAllOrders = async (req, res) => {
 
   } catch (error) {
 
+    console.error(error);
+
     res.status(500).json({
-      error: error.message
+
+      error: error.message,
+
+    });
+
+  }
+
+};
+
+const getLatestOrders = async (req, res) => {
+
+  try {
+
+    const orders = await Order.findAll({
+
+      limit: 5,
+
+      include: [
+
+        {
+
+          model: User,
+
+          attributes: [
+            "username",
+          ],
+
+        },
+
+      ],
+
+      order: [["createdAt", "DESC"]],
+
+    });
+
+    res.json(orders);
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+
+      error: error.message,
+
     });
 
   }
@@ -132,7 +186,13 @@ const getAllOrders = async (req, res) => {
 };
 
 module.exports = {
+
   createOrder,
+
   getOrdersByUser,
-  getAllOrders
+
+  getAllOrders,
+
+  getLatestOrders,
+
 };

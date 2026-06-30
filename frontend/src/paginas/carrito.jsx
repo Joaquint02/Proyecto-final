@@ -1,208 +1,151 @@
 import { useCarrito } from "../context/CarritoContext";
 import { Link } from "react-router-dom";
+import {
+  FaTrash,
+  FaMinus,
+  FaPlus,
+  FaShoppingBag,
+} from "react-icons/fa";
+
+import "../styles/carrito.css";
+
+function Carrito() {
+  const {
+    carrito,
+    eliminarProducto,
+    aumentarCantidad,
+    disminuirCantidad,
+  } = useCarrito();
 
+  const total = carrito.reduce(
+    (acc, producto) =>
+      acc + producto.precio * producto.cantidad,
+    0
+  );
 
+  return (
+    <div className="carrito-container">
+
+      <h1 className="carrito-title">
+        <FaShoppingBag /> Mi Carrito
+      </h1>
+
+      {carrito.length === 0 ? (
+        <div className="carrito-vacio">
 
-function Carrito(){
+          <h2>Tu carrito está vacío</h2>
+
+          <p>
+            Agregá productos para comenzar tu compra.
+          </p>
+
+          <Link to="/tienda" className="seguir-comprando">
+            Ir a la tienda
+          </Link>
+
+        </div>
+      ) : (
+        <div className="carrito-grid">
+
+          <div className="productos">
+
+            {carrito.map((producto) => (
+
+              <div
+                className="producto-card"
+                key={producto.id}
+              >
+
+                <img
+                  src={
+                    producto.imagen ||
+                    "https://via.placeholder.com/150"
+                  }
+                  alt={producto.nombre}
+                />
+
+                <div className="producto-info">
+
+                  <h2>{producto.nombre}</h2>
+
+                  <p>
+                    ${producto.precio}
+                  </p>
+
+                  <div className="cantidad">
+
+                    <button
+                      onClick={() =>
+                        disminuirCantidad(producto.id)
+                      }
+                    >
+                      <FaMinus />
+                    </button>
+
+                    <span>
+                      {producto.cantidad}
+                    </span>
+
+                    <button
+                      onClick={() =>
+                        aumentarCantidad(producto.id)
+                      }
+                    >
+                      <FaPlus />
+                    </button>
+
+                  </div>
+
+                </div>
+
+                <button
+                  className="eliminar"
+                  onClick={() =>
+                    eliminarProducto(producto.id)
+                  }
+                >
+                  <FaTrash />
+                </button>
 
+              </div>
 
-const {
+            ))}
 
-carrito,
+          </div>
 
-eliminarProducto,
+          <div className="resumen">
 
-aumentarCantidad,
+            <h2>Resumen de compra</h2>
 
-disminuirCantidad
+            <div className="fila">
+              <span>Productos</span>
+              <span>{carrito.length}</span>
+            </div>
 
-}=useCarrito();
+            <div className="fila">
+              <span>Envío</span>
+              <span>Gratis</span>
+            </div>
 
+            <div className="fila total">
+              <span>Total</span>
+              <span>${total.toFixed(2)}</span>
+            </div>
 
+            <Link
+              to="/checkout"
+              className="btn-checkout"
+            >
+              Finalizar compra
+            </Link>
 
+          </div>
 
+        </div>
+      )}
 
-const total = carrito.reduce(
-
-(acc,producto)=>
-
-acc + producto.precio * producto.cantidad,
-
-0
-
-);
-
-
-
-
-
-return(
-
-
-<div>
-
-
-<h1>
-
-🛒 Mi carrito
-
-</h1>
-
-
-
-
-
-{
-
-carrito.length === 0 ?
-
-
-<h2>
-
-Carrito vacío
-
-</h2>
-
-
-
-:
-
-
-<>
-
-
-
-{
-
-carrito.map(producto=>(
-
-
-<div key={producto.id}>
-
-
-<img
-  src={producto.imagen}
-  alt={producto.nombre}
-  className="carrito-img"
-/>
-
-
-
-<h2>
-
-{producto.nombre}
-
-</h2>
-
-
-
-<p>
-
-${producto.precio}
-
-</p>
-
-
-
-
-<button
-
-onClick={()=>disminuirCantidad(producto.id)}
-
->
-
--
-
-</button>
-
-
-
-
-<span>
-
-{producto.cantidad}
-
-</span>
-
-
-
-
-<button
-
-onClick={()=>aumentarCantidad(producto.id)}
-
->
-
-+
-
-</button>
-
-
-
-
-<button
-
-onClick={()=>eliminarProducto(producto.id)}
-
->
-
-Eliminar
-
-</button>
-
-
-
-</div>
-
-
-
-))
-
+    </div>
+  );
 }
-
-
-
-
-
-<h2>
-
-Total: ${total}
-
-</h2>
-
-
-
-
-
-<Link to="/checkout">
-
-
-<button>
-
-Finalizar compra
-
-</button>
-
-
-</Link>
-
-
-
-</>
-
-
-
-}
-
-
-
-</div>
-
-
-)
-
-
-}
-
 
 export default Carrito;

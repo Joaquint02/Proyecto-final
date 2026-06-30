@@ -1,0 +1,148 @@
+/* ==========================================
+   DARK MODE GLOBAL
+========================================== */
+
+body.dark{
+
+    background:#111827;
+    color:#f8fafc;
+
+}
+
+/* ---------- TARJETAS ---------- */
+
+body.dark .card,
+body.dark .product-card,
+body.dark .product-form-card,
+body.dark .product-list,
+body.dark .chart-card,
+body.dark .summary-card,
+body.dark .quick-card,
+body.dark .stat-card,
+body.dark .latest-orders,
+body.dark .activity-card,
+body.dark .dashboard,
+body.dark .checkout-card,
+body.dark .perfil-card{
+
+    background:#1f2937 !important;
+
+    color:#f8fafc !important;
+
+}
+
+/* ---------- TEXTOS ---------- */
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6,
+body.dark p,
+body.dark span,
+body.dark strong,
+body.dark label,
+body.dark td,
+body.dark th,
+body.dark li{
+
+    color:#f8fafc !important;
+
+}
+
+/* ---------- INPUTS ---------- */
+
+body.dark input,
+body.dark textarea,
+body.dark select{
+
+    background:#374151 !important;
+
+    color:white !important;
+
+    border:1px solid #4b5563 !important;
+
+}
+
+/* ---------- TABLAS ---------- */
+
+body.dark table{
+
+    background:#1f2937 !important;
+
+    color:white !important;
+
+}
+
+body.dark thead{
+
+    background:#2563eb !important;
+
+}
+
+body.dark tbody tr{
+
+    background:#1f2937 !important;
+
+}
+
+body.dark tbody tr:hover{
+
+    background:#374151 !important;
+
+}
+
+body.dark td{
+
+    border-color:#374151 !important;
+
+}
+
+/* ---------- PRODUCTOS ---------- */
+
+body.dark .product-info{
+
+    color:white !important;
+
+}
+
+body.dark .description{
+
+    color:#d1d5db !important;
+
+}
+
+body.dark .price{
+
+    color:#60a5fa !important;
+
+}
+
+body.dark .old-price{
+
+    color:#9ca3af !important;
+
+}
+
+/* ---------- LINKS ---------- */
+
+body.dark a{
+
+    color:white;
+
+}
+
+body.dark a:hover{
+
+    color:#60a5fa;
+
+}
+
+/* ---------- PLACEHOLDER ---------- */
+
+body.dark ::placeholder{
+
+    color:#9ca3af;
+
+}

@@ -1,0 +1,65 @@
+.latest-orders{
+
+background:white;
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+margin-top:30px;
+
+}
+
+.latest-orders h2{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+margin-bottom:20px;
+
+}
+
+.latest-orders table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+.latest-orders th{
+
+background:#2563eb;
+
+color:white;
+
+padding:12px;
+
+}
+
+.latest-orders td{
+
+padding:12px;
+
+text-align:center;
+
+border-bottom:1px solid #e5e7eb;
+
+}
+
+.dark .latest-orders{
+
+background:#1f2937;
+
+}
+
+.dark .latest-orders td{
+
+border-color:#374151;
+
+}

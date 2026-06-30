@@ -1,21 +1,45 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-import ProductList from "../components/ProductList";
-import ProductForm from "../components/ProductForm";
+import {
+  FaChartPie,
+  FaBoxOpen,
+  FaUsers,
+  FaShoppingCart,
+  FaChartLine,
+  FaSignOutAlt,
+} from "react-icons/fa";
+
+import SummaryCards from "../components/SummaryCards";
 import DashboardStats from "../components/DashboardStats";
+import SalesChart from "../components/SalesChart";
+import ProductForm from "../components/ProductForm";
+import ProductList from "../components/ProductList";
 import UserManagement from "../components/UserManagement";
 import OrdersManagement from "../components/OrdersManagement";
+import RecentActivity from "../components/RecentActivity";
+import QuickStats from "../components/QuickStats";
+import LatestOrders from "../components/LatestOrders";
 
 import api from "../services/api";
+
+import "../styles/dashboard.css";
 
 function Administracion({ logout }) {
 
   const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const [selectedProduct, setSelectedProduct] =
-    useState(null);
+  const dashboardRef = useRef(null);
+  const productosRef = useRef(null);
+  const usuariosRef = useRef(null);
+  const pedidosRef = useRef(null);
+  const reportesRef = useRef(null);
 
-  const loadProducts = async () => {
+  useEffect(() => {
+    cargarProductos();
+  }, []);
+
+  const cargarProductos = async () => {
 
     try {
 
@@ -25,62 +49,167 @@ function Administracion({ logout }) {
 
     } catch (error) {
 
-      console.error(
-        "Error cargando productos",
-        error
-      );
+      console.error(error);
 
     }
 
   };
 
-  useEffect(() => {
+  const scrollTo = (ref) => {
 
-    loadProducts();
+    ref.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
 
-  }, []);
+  };
 
   return (
 
     <div className="dashboard">
 
-      <header className="dashboard-header">
+      <aside className="sidebar">
 
-        <h1>
-          Panel Administrativo
-        </h1>
+        <h2>⚡ TechNova</h2>
 
-        <button onClick={logout}>
-          Cerrar Sesión
+        <ul>
+
+          <li onClick={() => scrollTo(dashboardRef)}>
+            <FaChartPie />
+            Dashboard
+          </li>
+
+          <li onClick={() => scrollTo(productosRef)}>
+            <FaBoxOpen />
+            Productos
+          </li>
+
+          <li onClick={() => scrollTo(usuariosRef)}>
+            <FaUsers />
+            Usuarios
+          </li>
+
+          <li onClick={() => scrollTo(pedidosRef)}>
+            <FaShoppingCart />
+            Pedidos
+          </li>
+
+          <li onClick={() => scrollTo(reportesRef)}>
+            <FaChartLine />
+            Reportes
+          </li>
+
+        </ul>
+
+        <button
+          className="logout-btn"
+          onClick={logout}
+        >
+
+          <FaSignOutAlt />
+
+          Cerrar sesión
+
         </button>
 
-      </header>
+      </aside>
 
-      <div className="dashboard-content">
+      <main className="dashboard-main">
 
-        <DashboardStats />
+        <header className="dashboard-header">
 
-        <section className="admin-grid">
+          <div>
 
-          <div className="admin-card">
-            <UserManagement />
+            <h1>Dashboard TechNova</h1>
+
+            <p>
+
+              Administración completa del sistema
+
+            </p>
+
           </div>
 
-          <div className="admin-card">
-            <OrdersManagement />
+          <div className="admin-info">
+
+            <div className="admin-avatar">
+
+              A
+
+            </div>
+
+            <div>
+
+              <strong>
+
+                Administrador
+
+              </strong>
+
+              <p>
+
+                admin@technova.com
+
+              </p>
+
+            </div>
+
           </div>
 
-          <div className="admin-card">
+        </header>
+
+        <section ref={dashboardRef}>
+
+          <SummaryCards />
+
+          <QuickStats />
+
+          <DashboardStats />
+
+          <SalesChart />
+
+        </section>
+
+        <section ref={pedidosRef}>
+
+          <OrdersManagement />
+
+          <LatestOrders />
+
+        </section>
+
+        <div className="dashboard-grid">
+
+          <div
+            className="left-column"
+            ref={productosRef}
+          >
+
             <ProductForm
               selectedProduct={selectedProduct}
               setSelectedProduct={setSelectedProduct}
               setProducts={setProducts}
             />
+
+            <RecentActivity />
+
           </div>
 
-        </section>
+          <div
+            className="right-column"
+            ref={usuariosRef}
+          >
 
-        <div className="product-table">
+            <UserManagement />
+
+          </div>
+
+        </div>
+
+        <div
+          className="table-section"
+          ref={reportesRef}
+        >
 
           <ProductList
             products={products}
@@ -90,7 +219,7 @@ function Administracion({ logout }) {
 
         </div>
 
-      </div>
+      </main>
 
     </div>
 

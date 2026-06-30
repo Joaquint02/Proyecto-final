@@ -6,17 +6,13 @@ const getStats = async (req, res) => {
 
   try {
 
-    const totalUsuarios =
-      await User.count();
+    const totalUsuarios = await User.count();
 
-    const totalProductos =
-      await Product.count();
+    const totalProductos = await Product.count();
 
-    const totalCompras =
-      await Order.count();
+    const totalCompras = await Order.count();
 
-    const ventas =
-      await Order.sum("total");
+    const ventas = await Order.sum("total");
 
     res.json({
 
@@ -26,7 +22,7 @@ const getStats = async (req, res) => {
 
       totalCompras,
 
-      ventas: ventas || 0
+      ventas: ventas || 0,
 
     });
 
@@ -35,7 +31,46 @@ const getStats = async (req, res) => {
     console.error(error);
 
     res.status(500).json({
-      error: error.message
+
+      error: error.message,
+
+    });
+
+  }
+
+};
+
+const getSalesChart = async (req, res) => {
+
+  try {
+
+    const ventasMensuales = [
+
+      12,
+      19,
+      8,
+      15,
+      25,
+      30,
+      22,
+      18,
+      28,
+      35,
+      40,
+      50,
+
+    ];
+
+    res.json(ventasMensuales);
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+
+      error: error.message,
+
     });
 
   }
@@ -43,5 +78,9 @@ const getStats = async (req, res) => {
 };
 
 module.exports = {
-  getStats
+
+  getStats,
+
+  getSalesChart,
+
 };

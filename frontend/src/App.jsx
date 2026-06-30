@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-
+import "./styles/carrito.css";
 import {
   BrowserRouter,
   Routes,
@@ -9,7 +9,7 @@ import {
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
 import Home from "./paginas/home";
@@ -112,6 +112,8 @@ function App() {
         />
 
       </Routes>
+
+      <Footer />
 
       <ToastContainer />
 

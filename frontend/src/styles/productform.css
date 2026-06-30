@@ -1,0 +1,174 @@
+/* =========================================
+   PRODUCT FORM - TECHNOVA
+========================================= */
+
+.product-form-card{
+
+    background:#ffffff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.product-form-card h2{
+
+    margin-bottom:25px;
+    color:#1e293b;
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+}
+
+.product-form{
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+
+}
+
+.product-form label{
+
+    font-weight:600;
+    color:#475569;
+    margin-bottom:5px;
+
+}
+
+.product-form input,
+.product-form textarea{
+
+    width:100%;
+    padding:14px;
+    border:1px solid #dbe3ec;
+    border-radius:12px;
+    font-size:15px;
+    transition:.3s;
+    box-sizing:border-box;
+
+}
+
+.product-form textarea{
+
+    resize:none;
+
+}
+
+.product-form input:focus,
+.product-form textarea:focus{
+
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.15);
+
+}
+
+.row-form{
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+
+}
+
+.preview-image{
+
+    margin-top:10px;
+    text-align:center;
+
+}
+
+.preview-image img{
+
+    width:220px;
+    height:180px;
+    object-fit:contain;
+    border-radius:15px;
+    border:1px solid #e2e8f0;
+    background:#f8fafc;
+    padding:10px;
+
+}
+
+.save-product{
+
+    margin-top:15px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:16px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    transition:.3s;
+
+}
+
+.save-product:hover{
+
+    background:#1d4ed8;
+    transform:translateY(-2px);
+
+}
+
+/* --------- DARK MODE --------- */
+
+.dark .product-form-card{
+
+    background:#1f2937;
+
+}
+
+.dark .product-form-card h2{
+
+    color:white;
+
+}
+
+.dark .product-form label{
+
+    color:#cbd5e1;
+
+}
+
+.dark .product-form input,
+.dark .product-form textarea{
+
+    background:#374151;
+    color:white;
+    border:1px solid #4b5563;
+
+}
+
+.dark .preview-image img{
+
+    background:#374151;
+    border-color:#4b5563;
+
+}
+
+/* --------- RESPONSIVE --------- */
+
+@media(max-width:768px){
+
+.row-form{
+
+grid-template-columns:1fr;
+
+}
+
+.preview-image img{
+
+width:100%;
+max-width:250px;
+
+}
+
+}

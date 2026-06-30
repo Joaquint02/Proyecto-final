@@ -1,28 +1,33 @@
 import { useEffect, useState } from "react";
+import {
+  FaBoxOpen,
+  FaUsers,
+  FaShoppingCart,
+  FaDollarSign,
+} from "react-icons/fa";
+
 import axios from "axios";
+import "../styles/dashboardStats.css";
 
 function DashboardStats() {
 
-  const [stats, setStats] =
-    useState(null);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
 
-    const cargarStats =
-      async () => {
+    const cargarStats = async () => {
 
       try {
 
-        const res =
-          await axios.get(
-            "http://localhost:3000/api/stats"
-          );
+        const res = await axios.get(
+          "http://localhost:3000/api/stats"
+        );
 
         setStats(res.data);
 
       } catch (error) {
 
-        console.error(error);
+        console.error("Error cargando estadísticas:", error);
 
       }
 
@@ -34,55 +39,107 @@ function DashboardStats() {
 
   if (!stats) {
 
-    return <h2>Cargando estadísticas...</h2>;
+    return (
+
+      <div className="stats-loading">
+
+        Cargando estadísticas...
+
+      </div>
+
+    );
 
   }
 
   return (
 
-    <div className="stats-container">
+    <section className="stats-container">
 
       <div className="stat-card">
 
-        <h3>📦 Productos</h3>
+        <div className="stat-icon blue">
 
-        <h2>
-          {stats.totalProductos}
-        </h2>
+          <FaBoxOpen />
+
+        </div>
+
+        <div className="stat-info">
+
+          <h3>Productos</h3>
+
+          <h2>{stats.totalProductos}</h2>
+
+          <p>Total registrados</p>
+
+        </div>
 
       </div>
 
       <div className="stat-card">
 
-        <h3>👥 Usuarios</h3>
+        <div className="stat-icon green">
 
-        <h2>
-          {stats.totalUsuarios}
-        </h2>
+          <FaUsers />
+
+        </div>
+
+        <div className="stat-info">
+
+          <h3>Usuarios</h3>
+
+          <h2>{stats.totalUsuarios}</h2>
+
+          <p>Usuarios activos</p>
+
+        </div>
 
       </div>
 
       <div className="stat-card">
 
-        <h3>🛒 Compras</h3>
+        <div className="stat-icon orange">
 
-        <h2>
-          {stats.totalCompras}
-        </h2>
+          <FaShoppingCart />
+
+        </div>
+
+        <div className="stat-info">
+
+          <h3>Compras</h3>
+
+          <h2>{stats.totalCompras}</h2>
+
+          <p>Pedidos realizados</p>
+
+        </div>
 
       </div>
 
       <div className="stat-card">
 
-        <h3>💰 Ventas</h3>
+        <div className="stat-icon purple">
 
-        <h2>
-          ${stats.ventas}
-        </h2>
+          <FaDollarSign />
+
+        </div>
+
+        <div className="stat-info">
+
+          <h3>Ventas</h3>
+
+          <h2>
+
+            ${Number(stats.ventas).toLocaleString()}
+
+          </h2>
+
+          <p>Total vendido</p>
+
+        </div>
 
       </div>
 
-    </div>
+    </section>
 
   );
 

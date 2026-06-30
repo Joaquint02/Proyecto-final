@@ -1,0 +1,392 @@
+/* =====================================
+   DASHBOARD TECHNOVA
+===================================== */
+
+html{
+    scroll-behavior:smooth;
+}
+
+.dashboard{
+    display:flex;
+    min-height:100vh;
+    background:#f4f7fb;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+/* =====================================
+   SIDEBAR
+===================================== */
+
+.sidebar{
+    width:260px;
+    background:#0f172a;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    padding:30px 20px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    box-shadow:4px 0 20px rgba(0,0,0,.10);
+}
+
+.sidebar h2{
+    text-align:center;
+    color:#3b82f6;
+    margin-bottom:40px;
+    font-size:28px;
+    font-weight:700;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.sidebar li{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    padding:15px 18px;
+
+    margin-bottom:12px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:16px;
+
+    font-weight:500;
+
+}
+
+.sidebar li svg{
+
+    font-size:18px;
+
+}
+
+.sidebar li:hover{
+
+    background:#2563eb;
+
+    transform:translateX(8px);
+
+}
+
+.sidebar li:active{
+
+    background:#1d4ed8;
+
+}
+
+.logout-btn{
+
+    margin-top:auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    border:none;
+
+    background:#ef4444;
+
+    color:white;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.logout-btn:hover{
+
+    background:#dc2626;
+
+    transform:scale(1.02);
+
+}
+
+/* =====================================
+   CONTENIDO
+===================================== */
+
+.dashboard-main{
+
+    flex:1;
+
+    padding:35px;
+
+    overflow-y:auto;
+
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.dashboard-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+.dashboard-header h1{
+
+    margin:0;
+
+    color:#1e293b;
+
+    font-size:34px;
+
+}
+
+.dashboard-header p{
+
+    margin-top:8px;
+
+    color:#64748b;
+
+}
+
+.admin-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.admin-avatar{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    box-shadow:0 10px 20px rgba(37,99,235,.30);
+
+}
+
+/* =====================================
+   GRID
+===================================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+    margin-top:35px;
+
+}
+
+.left-column,
+.right-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:25px;
+
+}
+
+.table-section{
+
+    margin-top:35px;
+
+}
+
+/* =====================================
+   SECCIONES
+===================================== */
+
+section{
+
+    margin-bottom:40px;
+
+    scroll-margin-top:20px;
+
+}
+
+/* =====================================
+   CARDS
+===================================== */
+
+.card,
+.product-form-card,
+.product-list,
+.chart-card,
+.activity-card,
+.latest-orders{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    animation:fade .5s ease;
+
+}
+
+/* =====================================
+   ANIMACIÓN
+===================================== */
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =====================================
+   DARK MODE
+===================================== */
+
+.dark .dashboard{
+
+    background:#111827;
+
+}
+
+.dark .dashboard-main{
+
+    background:#111827;
+
+}
+
+.dark .dashboard-header h1{
+
+    color:white;
+
+}
+
+.dark .dashboard-header p{
+
+    color:#cbd5e1;
+
+}
+
+.dark .card,
+.dark .product-form-card,
+.dark .product-list,
+.dark .chart-card,
+.dark .activity-card,
+.dark .latest-orders{
+
+    background:#1f2937;
+
+    color:white;
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:1100px){
+
+.dashboard-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.sidebar{
+
+width:220px;
+
+}
+
+}
+
+@media(max-width:850px){
+
+.dashboard{
+
+flex-direction:column;
+
+}
+
+.sidebar{
+
+width:100%;
+
+height:auto;
+
+position:relative;
+
+}
+
+.dashboard-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+}

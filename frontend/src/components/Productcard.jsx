@@ -1,73 +1,127 @@
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useCarrito } from "../context/CarritoContext";
+import { useFavoritos } from "../context/FavoritosContext";
 
+import {
+  FaShoppingCart,
+  FaHeart,
+  FaRegHeart,
+  FaStar
+} from "react-icons/fa";
 
-function ProductCard({producto}){
+import "../styles/cards.css";
 
+function ProductCard({ producto }) {
 
-return(
+  const { agregarProducto } = useCarrito();
 
+  const { toggleFavorito, esFavorito } = useFavoritos();
 
-<div className="product-card">
+  const comprar = () => {
 
+    agregarProducto(producto);
 
+    toast.success("Producto agregado al carrito 🛒");
 
-<img
+  };
 
-src={producto.imagen}
+  return (
 
-alt={producto.nombre}
+    <div className="product-card">
 
-/>
+      <div className="product-image">
 
+        <span className="discount">
+          -15%
+        </span>
 
+        <button
+          className="favorite-btn"
+          onClick={() => toggleFavorito(producto)}
+        >
 
+          {
+            esFavorito(producto.id)
+              ? <FaHeart />
+              : <FaRegHeart />
+          }
 
-<h2>
+        </button>
 
-{producto.nombre}
+        <img
+          src={
+            producto.imagen ||
+            "https://via.placeholder.com/300x250?text=TechNova"
+          }
+          alt={producto.nombre}
+        />
 
-</h2>
+      </div>
 
+      <div className="product-info">
 
+        <div className="rating">
 
-<p>
+          <FaStar />
+          <FaStar />
+          <FaStar />
+          <FaStar />
+          <FaStar />
 
-{producto.descripcion}
+        </div>
 
-</p>
+        <h3>{producto.nombre}</h3>
 
+        <p className="description">
 
+          {producto.descripcion
+            ? producto.descripcion.substring(0, 70)
+            : "Producto tecnológico de alta calidad."}
 
-<h3>
+        </p>
 
-${producto.precio}
+        <div className="price">
 
-</h3>
+          <span className="old-price">
 
+            ${(producto.precio * 1.15).toFixed(2)}
 
+          </span>
 
+          <span className="new-price">
 
-<Link to={`/producto/${producto.id}`}>
+            ${producto.precio}
 
+          </span>
 
-<button>
+        </div>
 
-Ver producto
+        <div className="card-buttons">
 
-</button>
+          <Link
+            to={`/producto/${producto.id}`}
+            className="details-btn"
+          >
+            Ver detalle
+          </Link>
 
+          <button
+            className="cart-btn-card"
+            onClick={comprar}
+          >
+            <FaShoppingCart />
+            Comprar
+          </button>
 
-</Link>
+        </div>
 
+      </div>
 
+    </div>
 
-</div>
-
-
-)
-
+  );
 
 }
-
 
 export default ProductCard;

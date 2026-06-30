@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
+import { FaSave, FaPlusCircle, FaImage } from "react-icons/fa";
+import { toast } from "react-toastify";
 import api from "../services/api";
+import "../styles/productForm.css";
 
 function ProductForm({
   selectedProduct,
@@ -16,7 +19,9 @@ function ProductForm({
   });
 
   useEffect(() => {
+
     if (selectedProduct) {
+
       setFormData({
         nombre: selectedProduct.nombre || "",
         descripcion: selectedProduct.descripcion || "",
@@ -24,17 +29,38 @@ function ProductForm({
         stock: selectedProduct.stock || "",
         imagen: selectedProduct.imagen || "",
       });
+
+    } else {
+
+      limpiarFormulario();
+
     }
+
   }, [selectedProduct]);
 
+  const limpiarFormulario = () => {
+
+    setFormData({
+      nombre: "",
+      descripcion: "",
+      precio: "",
+      stock: "",
+      imagen: "",
+    });
+
+  };
+
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
@@ -46,7 +72,7 @@ function ProductForm({
           formData
         );
 
-        alert("Producto actualizado correctamente");
+        toast.success("Producto actualizado correctamente");
 
       } else {
 
@@ -55,7 +81,8 @@ function ProductForm({
           formData
         );
 
-        alert("Producto agregado correctamente");
+        toast.success("Producto agregado correctamente");
+
       }
 
       const res = await api.get("/");
@@ -64,89 +91,153 @@ function ProductForm({
 
       setSelectedProduct(null);
 
-      setFormData({
-        nombre: "",
-        descripcion: "",
-        precio: "",
-        stock: "",
-        imagen: "",
-      });
+      limpiarFormulario();
 
     } catch (error) {
 
       console.error(error);
 
-      alert("Error al guardar producto");
+      toast.error("No se pudo guardar el producto");
+
     }
+
   };
 
   return (
-    <div className="card">
+
+    <div className="product-form-card">
 
       <h2>
-        {selectedProduct
-          ? "Editar Producto"
-          : "Agregar Producto"}
+
+        {selectedProduct ? (
+          <>
+            <FaSave />
+            Editar Producto
+          </>
+        ) : (
+          <>
+            <FaPlusCircle />
+            Nuevo Producto
+          </>
+        )}
+
       </h2>
 
-      <form onSubmit={handleSubmit}>
+      <form
+        className="product-form"
+        onSubmit={handleSubmit}
+      >
+
+        <label>Nombre del producto</label>
 
         <input
           type="text"
           name="nombre"
-          placeholder="Nombre"
+          placeholder="Ej: Notebook Lenovo"
           value={formData.nombre}
           onChange={handleChange}
           required
         />
 
-        <input
-          type="text"
+        <label>Descripción</label>
+
+        <textarea
           name="descripcion"
-          placeholder="Descripción"
+          placeholder="Descripción del producto..."
+          rows="4"
           value={formData.descripcion}
           onChange={handleChange}
           required
         />
 
-        <input
-          type="number"
-          name="precio"
-          placeholder="Precio"
-          value={formData.precio}
-          onChange={handleChange}
-          required
-        />
+        <div className="row-form">
 
-        <input
-          type="number"
-          name="stock"
-          placeholder="Stock"
-          value={formData.stock}
-          onChange={handleChange}
-          required
-        />
+          <div>
+
+            <label>Precio</label>
+
+            <input
+              type="number"
+              name="precio"
+              placeholder="0"
+              value={formData.precio}
+              onChange={handleChange}
+              required
+            />
+
+          </div>
+
+          <div>
+
+            <label>Stock</label>
+
+            <input
+              type="number"
+              name="stock"
+              placeholder="0"
+              value={formData.stock}
+              onChange={handleChange}
+              required
+            />
+
+          </div>
+
+        </div>
+
+        <label>
+
+          <FaImage />
+
+          URL de la imagen
+
+        </label>
 
         <input
           type="text"
           name="imagen"
-          placeholder="URL de Imagen"
+          placeholder="https://..."
           value={formData.imagen}
           onChange={handleChange}
         />
 
-        <button type="submit">
+        <div className="preview-image">
 
-          {selectedProduct
-            ? "Actualizar Producto"
-            : "Guardar Producto"}
+          <img
+            src={
+              formData.imagen
+                ? formData.imagen
+                : "https://via.placeholder.com/350x220?text=Vista+Previa"
+            }
+            alt="Vista previa"
+          />
+
+        </div>
+
+        <button
+          type="submit"
+          className="save-product"
+        >
+
+          {selectedProduct ? (
+            <>
+              <FaSave />
+              Actualizar Producto
+            </>
+          ) : (
+            <>
+              <FaPlusCircle />
+              Guardar Producto
+            </>
+          )}
 
         </button>
 
       </form>
 
     </div>
+
   );
+
 }
 
 export default ProductForm;

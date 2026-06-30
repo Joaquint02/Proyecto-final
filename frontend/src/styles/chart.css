@@ -1,0 +1,25 @@
+.chart-card{
+
+background:white;
+
+padding:30px;
+
+border-radius:20px;
+
+margin-bottom:30px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.dark .chart-card{
+
+background:#1f2937;
+
+}
+
+.chart-card h2{
+
+margin-bottom:25px;
+
+}
