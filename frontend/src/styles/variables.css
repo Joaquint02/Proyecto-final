@@ -1,23 +1,21 @@
 :root{
 
-    /* Fondo */
 
     --bg:#f4f7fb;
     --bg-card:#ffffff;
 
-    /* Texto */
+    
 
     --text:#1e293b;
     --text-secondary:#64748b;
 
-    /* Colores */
+    
 
     --primary:#2563eb;
     --danger:#ef4444;
     --success:#16a34a;
 
-    /* Bordes */
-
+  
     --border:#e5e7eb;
 
 }

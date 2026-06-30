@@ -1,6 +1,3 @@
-/* ==========================================
-   DARK MODE GLOBAL
-========================================== */
 
 body.dark{
 
@@ -9,7 +6,6 @@ body.dark{
 
 }
 
-/* ---------- TARJETAS ---------- */
 
 body.dark .card,
 body.dark .product-card,
@@ -31,7 +27,6 @@ body.dark .perfil-card{
 
 }
 
-/* ---------- TEXTOS ---------- */
 
 body.dark h1,
 body.dark h2,
@@ -51,7 +46,6 @@ body.dark li{
 
 }
 
-/* ---------- INPUTS ---------- */
 
 body.dark input,
 body.dark textarea,
@@ -65,7 +59,6 @@ body.dark select{
 
 }
 
-/* ---------- TABLAS ---------- */
 
 body.dark table{
 
@@ -99,7 +92,6 @@ body.dark td{
 
 }
 
-/* ---------- PRODUCTOS ---------- */
 
 body.dark .product-info{
 
@@ -125,7 +117,6 @@ body.dark .old-price{
 
 }
 
-/* ---------- LINKS ---------- */
 
 body.dark a{
 
@@ -139,7 +130,6 @@ body.dark a:hover{
 
 }
 
-/* ---------- PLACEHOLDER ---------- */
 
 body.dark ::placeholder{
 
